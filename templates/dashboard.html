@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Flask Question Paper Generator</h1>
+        <nav>
+            <a href="{{ url_for('generate') }}">Generate Questions</a> |
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome, {{ username }}!</h2>
+        <p>Select an option from the menu to get started.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Flask Question Paper Generator</p>
+    </footer>
+</body>
+</html>

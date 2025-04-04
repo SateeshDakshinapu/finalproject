@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Generate Question Paper</title>
+    <link rel="stylesheet" href="../static/generate.css" />
+  </head>
+  <body>
+    <header>
+      <h2>Generate Question Paper</h2>
+    </header>
+    <form method="POST">
+      <label>Exam Title:</label>
+      <input type="text" name="exam_title" value="B.TECH VI SEMESTER (R20)" />
+      <br />
+      <label>Subject:</label>
+      <input type="text" name="subject" value="COMPUTER NETWORKS" />
+      <br />
+      <label>Syllabus:</label>
+      <textarea name="syllabus_text" rows="5" cols="50" required></textarea>
+      <br />
+      <input type="submit" value="Generate" />
+    </form>
+    <br />
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <footer>
+      <p>&copy; 2025 Flask Question Paper Generator</p>
+    </footer>
+  </body>
+</html>
