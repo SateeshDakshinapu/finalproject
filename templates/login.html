@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login</title>
+    <title>Generate Question Paper - Login</title>
     <link rel="stylesheet" href="../static/login.css" />
   </head>
   <body>
-    <header>
-      <h2>Generate Question Paper</h2>
-    </header>
-    <h2>Login</h2>
-    {% if error %}
-    <p class="error">{{ error }}</p>
-    {% endif %}
-    <form method="POST">
-      <label>Username:</label>
-      <input type="text" name="username" required />
-      <br />
-      <label>Password:</label>
-      <input type="password" name="password" required />
-      <br />
-      <input type="submit" value="Login" />
-    </form>
+    <div class="container">
+      <div class="left">
+        <h1>GENERATE QUESTION PAPER</h1>
+        <p class="tagline">A Smart Digital Exam Paper Generator</p>
+
+        <form method="POST">
+          {% if error %}
+          <p class="error">{{ error }}</p>
+          {% endif %}
+          <input type="text" name="username" placeholder="Username" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Log In <span class="arrow">➜</span></button>
+        </form>
+      </div>
+
+      <div class="right">
+        <div class="hex-container">
+          <img src="{{ url_for('static', filename='img1.png') }}" class="hex" />
+          <img src="{{ url_for('static', filename='img2.png') }}" class="hex" />
+          <img src="{{ url_for('static', filename='img3.png') }}" class="hex" />
+        </div>
+      </div>
+    </div>
     <footer>
       <p>&copy; 2025 Flask Question Paper Generator</p>
     </footer>
