@@ -1,92 +1,101 @@
+/* Background and overall layout */
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #003333;
-  color: #fff;
+  background: url('../static/Screenshot\ 2025-04-15\ 104001.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: white;
 }
 
+/* Container holds left and right sections */
 .container {
   display: flex;
-  height: 100vh;
-}
-
-.left {
   flex: 1;
-  padding: 60px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
+/* Left side styling (form) */
+.left {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 10px #ff4081;
+}
+
+/* Header and tagline */
 .left h1 {
-  font-size: 36px;
+  margin-bottom: 10px;
+  font-size: 28px;
   font-weight: bold;
-  color: white;
+  color: #ffffff;
 }
 
 .left .tagline {
-  font-size: 16px;
+  font-size: 14px;
+  color: #ddd;
   margin-bottom: 30px;
-  color: #ccc;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-}
-
+/* Form fields */
 input[type="text"],
 input[type="password"] {
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   margin: 10px 0;
   border: none;
-  background: #194d4d;
-  color: white;
+  border-bottom: 2px solid #ff4081;
+  background: transparent;
+  color: #fff;
   font-size: 16px;
-  border-radius: 5px;
+  outline: none;
 }
 
-button {
-  background-color: #e74c3c;
-  color: white;
-  font-size: 18px;
-  padding: 10px;
+/* Button styling */
+button[type="submit"] {
+  background-color: #ff4081;
   border: none;
-  margin-top: 10px;
-  cursor: pointer;
+  padding: 12px 25px;
+  margin-top: 20px;
   border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #e73370;
 }
 
 button .arrow {
-  margin-left: 10px;
+  margin-left: 8px;
 }
 
+/* Error message */
+.error {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Right side (images) */
 .right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: none; /* Hidden for simplicity, or style later */
 }
 
-.hex-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.hex {
-  width: 150px;
-  height: 150px;
-  border-radius: 20px;
-  border: 6px solid #ccc;
-  background-color: #194d4d;
-  padding: 10px;
-  object-fit: contain;
-}
-
+/* Footer */
 footer {
   text-align: center;
-  padding: 10px;
-  background-color: #002222;
+  padding: 15px;
   color: #aaa;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
+  font-size: 13px;
 }
