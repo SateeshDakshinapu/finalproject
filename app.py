@@ -4,6 +4,9 @@ import google.generativeai as genai
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.shared import RGBColor
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.enum.table import WD_TABLE_ALIGNMENT 
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -12,10 +15,8 @@ UPLOAD_FOLDER = "generated_papers"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Use environment variable for API key security
-genai.configure(api_key=os.environ.get("AIzaSyB5RRdbSHe9K2FYRTrcGpiIhEjw-myna1Q"))
+genai.configure(api_key="AIzaSyB5RRdbSHe9K2FYRTrcGpiIhEjw-myna1Q")  # Replace with your valid API key
 
-# Simple authentication
 users = {"admin": "password123"}
 
 @app.route("/", methods=["GET", "POST"])
@@ -83,24 +84,23 @@ def generate():
             section.right_margin = Inches(0.5)
 
         # Header
+         # Header (Centered)
         p1 = doc.add_paragraph("Q. P. Code: 20CSE363\t\t\tHALL TICKET NO.: ___________")
-        p1.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+        p1.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER  # Center the first line
 
         doc.add_paragraph(exam_title).alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
         doc.add_paragraph("REGULAR / SUPPLEMENTARY EXAMINATIONS - JUN - 2024").alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
         doc.add_paragraph(subject).alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
         doc.add_paragraph("(Common to CSE, CSM, CAI and CSD)").alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
-        time_marks_paragraph = doc.add_paragraph(
-            "Time: 3 Hours\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMax. Marks: 70"
-        )
+        time_marks_paragraph = doc.add_paragraph("Time: 3 Hours\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tMax. Marks: 70")
         time_marks_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         doc.add_paragraph("---------------------------------------------------------------------").alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
         # PART A
         p_part_a = doc.add_paragraph("PART – A", style='Heading 2')
         p_part_a.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+
         doc.add_paragraph("Answer ALL questions. Each question carries 2 marks.\n").alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         part_a = ""
@@ -118,17 +118,23 @@ def generate():
                 question = parts[0].strip()
                 if len(parts) > 1:
                     metadata = parts[1].replace(")", "").split(",")
-                    co = metadata[0].strip() if len(metadata) > 0 else "-"
-                    bt = metadata[1].strip() if len(metadata) > 1 else "-"
+                    if len(metadata) >= 2:
+                        co = metadata[0].strip()
+                        bt = metadata[1].strip()
+                    else:
+                        co = metadata[0].strip() if metadata else "-"
+                        bt = "-"
                 else:
                     co = bt = "-"
                 qno = question.split(".")[0]
                 qtext = ".".join(question.split(".")[1:]).strip()
+
                 doc.add_paragraph(f"{qno}. {qtext} (CO: {co}, BT: {bt})")
 
         # PART B
         p_part_b = doc.add_paragraph("\nPART – B", style='Heading 2')
         p_part_b.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+
         doc.add_paragraph("Answer ONE question from each UNIT – Each question carries 10 marks.\n").alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         units = part_b.strip().split("UNIT")
@@ -147,8 +153,12 @@ def generate():
                         qtext = parts[0].strip()
                         meta = "".join(parts[1:]).replace(")", "")
                         co_bt = meta.split(",")
-                        co = co_bt[0].strip() if len(co_bt) > 0 else "-"
-                        bt = co_bt[1].strip() if len(co_bt) > 1 else "-"
+                        if len(co_bt) >= 2:
+                            co = co_bt[0].strip()
+                            bt = co_bt[1].strip()
+                        else:
+                            co = co_bt[0].strip() if co_bt else "-"
+                            bt = "-"
                     else:
                         qtext = question
                         co = bt = "-"
@@ -165,5 +175,5 @@ def generate():
 
     return render_template("generate.html")
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     app.run(debug=True)
